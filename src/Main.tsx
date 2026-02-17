@@ -197,7 +197,7 @@ function Main({
             onCwdChange={(newCwd: string) => setCwd(newCwd)}
             multiSelected={multiSelected}
             onMultiSelect={handleMultiSelect}
-            emptyMessage={<Centered>No files or folders</Centered>}
+            emptyMessage={<Centered>没有文件或文件夹</Centered>}
           />
         </DropZone>
       )}
@@ -216,7 +216,7 @@ function Main({
             }}
             onClick={() => setShowTextPadDrawer(true)}
           >
-            Open TextPad
+            打开写字板
           </Button>
         </>
       )}
