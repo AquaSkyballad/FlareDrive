@@ -84,11 +84,8 @@ function DropZone({
       sx={{
         flexGrow: 1,
         overflowY: "auto",
-        backgroundColor: (theme) => 
-          theme.palette.mode === 'light'
-            ? 'rgba(255, 255, 255, 0.7)'  // 半透明白色覆盖层
-            : 'rgba(0, 0, 0, 0.7)',       // 半透明黑色覆盖层（深色模式）
-        backdropFilter: 'blur(10px)',     // 添加模糊效果增强视觉体验
+        backgroundColor: 'transparent',  // 改为完全透明
+        backdropFilter: 'none',           // 移除模糊效果
         filter: dragging ? "brightness(0.9)" : "none",
         transition: "filter 0.2s",
       }}
