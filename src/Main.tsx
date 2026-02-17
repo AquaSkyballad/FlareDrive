@@ -258,7 +258,7 @@ function Main({
           const filenames = multiSelected
             .map((key) => key.replace(/\/$/, "").split("/").pop())
             .join("\n");
-          const confirmMessage = "Delete the following file(s) permanently?";
+          const confirmMessage = "是否永久删除文件?";
           if (!window.confirm(`${confirmMessage}\n${filenames}`)) return;
           for (const key of multiSelected)
             await fetch(`/webdav/${encodeKey(key)}`, { method: "DELETE" });
