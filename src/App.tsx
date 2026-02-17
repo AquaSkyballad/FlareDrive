@@ -23,7 +23,7 @@ const globalStyles = (
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundAttachment: "fixed",
-        backgroundColor: "rgba(255, 255, 255, 0.5)", // 设置50%透明度的白色覆盖层
+        backgroundColor: "rgba(255, 255, 255, 0.6)", // 设置60%透明度的白色覆盖层
         backgroundBlendMode: "overlay" // 混合背景色与背景图
       } 
     }} 
