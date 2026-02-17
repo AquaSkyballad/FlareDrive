@@ -38,19 +38,19 @@ function ProgressDialog({
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
-      <DialogTitle>Progress</DialogTitle>
+      <DialogTitle>传输进度</DialogTitle>
       <Tabs
         value={tab}
         onChange={(_, newTab) => setTab(newTab)}
         sx={{ "& .MuiTab-root": { flexBasis: "50%" } }}
       >
-        <Tab label="Downloads" />
-        <Tab label="Uploads" />
+        <Tab label="下载" />
+        <Tab label="上传" />
       </Tabs>
       {tasks.length === 0 ? (
         <DialogContent>
           <Typography textAlign="center" color="text.secondary">
-            No tasks
+            暂无任务
           </Typography>
         </DialogContent>
       ) : (

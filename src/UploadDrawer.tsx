@@ -112,28 +112,28 @@ function UploadDrawer({
           <Grid item xs={3}>
             <IconCaptionButton
               icon={<CameraIcon fontSize="large" />}
-              caption="Camera"
+              caption="拍照"
               onClick={takePhoto}
             />
           </Grid>
           <Grid item xs={3}>
             <IconCaptionButton
               icon={<ImageIcon fontSize="large" />}
-              caption="Image/Video"
+              caption="图片/视频"
               onClick={uploadImage}
             />
           </Grid>
           <Grid item xs={3}>
             <IconCaptionButton
               icon={<UploadIcon fontSize="large" />}
-              caption="Upload"
+              caption="上传文件"
               onClick={uploadFile}
             />
           </Grid>
           <Grid item xs={3}>
             <IconCaptionButton
               icon={<CreateNewFolderIcon fontSize="large" />}
-              caption="Create Folder"
+              caption="创建文件夹"
               onClick={async () => {
                 setOpen(false);
                 await createFolder(cwd);

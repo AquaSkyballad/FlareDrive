@@ -197,7 +197,7 @@ function Main({
             onCwdChange={(newCwd: string) => setCwd(newCwd)}
             multiSelected={multiSelected}
             onMultiSelect={handleMultiSelect}
-            emptyMessage={<Centered>No files or folders</Centered>}
+            emptyMessage={<Centered>暂无文件或文件夹</Centered>}
           />
         </DropZone>
       )}
@@ -216,7 +216,7 @@ function Main({
             }}
             onClick={() => setShowTextPadDrawer(true)}
           >
-            Open TextPad
+            打开写字板
           </Button>
         </>
       )}
@@ -257,7 +257,7 @@ function Main({
           const filenames = multiSelected
             .map((key) => key.replace(/\/$/, "").split("/").pop())
             .join("\n");
-          const confirmMessage = "Delete the following file(s) permanently?";
+          const confirmMessage = "确定要永久删除以下文件吗?";
           if (!window.confirm(`${confirmMessage}\n${filenames}`)) return;
           for (const key of multiSelected)
             await fetch(`/webdav/${encodeKey(key)}`, { method: "DELETE" });
