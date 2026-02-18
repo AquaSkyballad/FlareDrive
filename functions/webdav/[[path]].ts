@@ -72,7 +72,6 @@ export const onRequest: PagesFunction<{
 
     // 解析用户名
     let attemptUsername = "unknown";
-
     try {
       const base64 = auth.split(" ")[1];
       const decoded = atob(base64);
@@ -81,22 +80,27 @@ export const onRequest: PagesFunction<{
       return new Response("Unauthorized", { status: 401 });
     }
 
-    const banKey = `login:ban:${ip}:${attemptUsername}`;
-    const failKey = `login:fail:${ip}:${attemptUsername}`;
+    const key = `login:${ip}:${attemptUsername}`;
 
-    // 检查是否被封禁
-    const banned = await env.KV_NAMESPACE.get(banKey);
-    if (banned) {
-      return new Response("Too many login attempts. Try again later.", {
+    // 只读一次
+    let recordRaw = await env.WEBDAV_KV.get(key);
+    let record = recordRaw ? JSON.parse(recordRaw) : null;
+
+    const now = Date.now();
+
+    // 检查是否被封
+    if (record?.bannedUntil && record.bannedUntil > now) {
+      return new Response("Too many login attempts. Try later.", {
         status: 403,
       });
     }
 
+    // 构造正确 auth
     const expectedAuth = `Basic ${btoa(
       `${env.WEBDAV_USERNAME}:${env.WEBDAV_PASSWORD}`
     )}`;
 
-    // timing safe 比较
+    // timing safe
     const encoder = new TextEncoder();
     const a = encoder.encode(auth);
     const b = encoder.encode(expectedAuth);
@@ -106,33 +110,32 @@ export const onRequest: PagesFunction<{
       crypto.subtle.timingSafeEqual(a, b);
 
     if (!authValid) {
-      const currentFails = parseInt(
-        (await env.KV_NAMESPACE.get(failKey)) || "0"
-      );
+      const fails = (record?.fails || 0) + 1;
 
-      const newFails = currentFails + 1;
+      let newRecord = {
+        fails,
+        bannedUntil: 0,
+      };
 
-      if (newFails >= 5) {
-        await env.KV_NAMESPACE.put(banKey, "1", {
-          expirationTtl: 1800, // 30分钟
-        });
-
-        await env.KV_NAMESPACE.delete(failKey);
-
-        return new Response("Too many login attempts. Banned 30 minutes.", {
-          status: 403,
-        });
+      if (fails >= 5) {
+        newRecord.bannedUntil = now + 30 * 60 * 1000; // 30分钟
       }
 
-      await env.KV_NAMESPACE.put(failKey, newFails.toString(), {
-        expirationTtl: 1800,
-      });
+      await env.WEBDAV_KV.put(
+        key,
+        JSON.stringify(newRecord),
+        {
+          expirationTtl: 1800, // 自动过期
+        }
+      );
 
-      return new Response("Unauthorized", { status: 401 });
+      return new Response("Unauthorized", {
+        status: fails >= 5 ? 403 : 401,
+      });
     }
 
-    // 登录成功 → 清空失败记录
-    await env.KV_NAMESPACE.delete(failKey);
+    // 登录成功 → 什么都不写
+
   }
 
 
