@@ -83,7 +83,7 @@ export const onRequest: PagesFunction<{
     const key = `login:${ip}:${attemptUsername}`;
 
     // 只读一次
-    let recordRaw = await env.WEBDAV_KV.get(key);
+    let recordRaw = await env.KV_NAMESPACE.get(key);
     let record = recordRaw ? JSON.parse(recordRaw) : null;
 
     const now = Date.now();
@@ -121,7 +121,7 @@ export const onRequest: PagesFunction<{
         newRecord.bannedUntil = now + 30 * 60 * 1000; // 30分钟
       }
 
-      await env.WEBDAV_KV.put(
+      await env.KV_NAMESPACE.put(
         key,
         JSON.stringify(newRecord),
         {
