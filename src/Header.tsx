@@ -29,7 +29,7 @@ function Header({
         sx={{ marginLeft: 0.5 }}
         onClick={() => setShowProgressDialog(true)}
       >
-        <SvgIcon component={() => <img src="/transfer.svg" />} inheritViewBox />
+        <SvgIcon component={() => <img src="/transfer.svg" alt="传输进度" />} inheritViewBox />
       </Button>
     </Toolbar>
   );
