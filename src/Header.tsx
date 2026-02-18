@@ -1,6 +1,4 @@
-import { IconButton, InputBase, Button, Toolbar } from "@mui/material";
-import { useState } from "react";
-import { MoreHoriz as MoreHorizIcon } from "@mui/icons-material";
+import { InputBase, Button, Toolbar } from "@mui/material";
 
 function Header({
   search,
