@@ -1,4 +1,4 @@
-import { IconButton, InputBase, Menu, MenuItem, Toolbar } from "@mui/material";
+import { IconButton, InputBase, Button, Toolbar } from "@mui/material";
 import { useState } from "react";
 import { MoreHoriz as MoreHorizIcon } from "@mui/icons-material";
 
@@ -11,7 +11,6 @@ function Header({
   onSearchChange: (newSearch: string) => void;
   setShowProgressDialog: (show: boolean) => void;
 }) {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   return (
     <Toolbar disableGutters sx={{ padding: 1 }}>
@@ -27,30 +26,13 @@ function Header({
           padding: "8px 16px",
         }}
       />
-      <IconButton
-        aria-label="More"
-        color="inherit"
+      {/* Delete:IconButton和Menu相关代码，替换成直接按钮 */}
+      <Button 
         sx={{ marginLeft: 0.5 }}
-        onClick={(e) => setAnchorEl(e.currentTarget)}
+        onClick={() => setShowProgressDialog(true)}
       >
-        <MoreHorizIcon />
-      </IconButton>
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={() => setAnchorEl(null)}
-      >
-        <MenuItem>查看</MenuItem>
-        <MenuItem>整理</MenuItem>
-        <MenuItem
-          onClick={() => {
-            setAnchorEl(null);
-            setShowProgressDialog(true);
-          }}
-        >
-          传输进度
-        </MenuItem>
-      </Menu>
+        传输进度
+      </Button>
     </Toolbar>
   );
 }
