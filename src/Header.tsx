@@ -1,4 +1,4 @@
-import { InputBase, Button, Toolbar } from "@mui/material";
+import { InputBase, Button, Toolbar, SvgIcon } from "@mui/material";
 
 function Header({
   search,
@@ -29,7 +29,7 @@ function Header({
         sx={{ marginLeft: 0.5 }}
         onClick={() => setShowProgressDialog(true)}
       >
-        传输进度
+        <SvgIcon component={() => <img src="/transfer.svg" />} inheritViewBox />
       </Button>
     </Toolbar>
   );
