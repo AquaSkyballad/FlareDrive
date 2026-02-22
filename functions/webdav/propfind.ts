@@ -19,7 +19,7 @@ type DavProperties = {
 
 function fromR2Object(object: R2Object | typeof ROOT_OBJECT): DavProperties {
   return {
-    creationdate: object.uploaded.toUTCString(),
+    creationdate: object.uploaded.toISOString(),
     displayname: object.httpMetadata?.contentDisposition,
     getcontentlanguage: object.httpMetadata?.contentLanguage,
     getcontentlength: object.size.toString(),
